@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | DSM Digital Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: #020617;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 900px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.left-panel {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-panel h1 { font-size: 32px; margin-bottom: 20px; }
+.left-panel p { opacity: 0.9; }
+
+.right-panel {
+  padding: 60px;
+}
+
+.right-panel h2 { margin-bottom: 30px; }
+.input-group { margin-bottom: 20px; position: relative; }
+.input-group label { font-size: 14px; opacity: .8; }
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 5px;
+  background: #1e293b;
+  color: white;
+}
+.input-group input:focus { outline: 2px solid #0ea5e9; }
+.toggle-password { position: absolute; right: 15px; top: 40px; cursor: pointer; }
+
+.btn { width: 100%; padding: 12px; border: none; border-radius: 6px; background: #0ea5e9; color: white; font-size: 16px; cursor: pointer; transition: .3s; }
+.btn:hover { background: #0284c7; }
+
+.tabs { display: flex; margin-bottom: 20px; }
+.tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; background: #1e293b; border-radius: 6px 6px 0 0; margin-right: 5px; transition: .3s; }
+.tab.active { background: #0ea5e9; }
+
+.form-section { display: none; }
+.form-section.active { display: block; }
+
+.extra { margin-top: 15px; font-size: 14px; display: flex; justify-content: space-between; }
+.extra a { color: #38bdf8; text-decoration: none; }
+
+@media(max-width: 800px) {
+  .container { grid-template-columns: 1fr; width: 90%; }
+  .left-panel { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="left-panel">
+<h1>DSM Digital Web</h1>
+<p>Marketing digital, criação de sites e ferramentas para gerir seu negócio.</p>
+</div>
+
+<div class="right-panel">
+
+<div class="tabs">
+<div class="tab active" data-tab="login">Login</div>
+<div class="tab" data-tab="register">Criar Conta</div>
+<div class="tab" data-tab="admin">Admin</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="form-section active">
+<h2>Login</h2>
+<form id="loginForm">
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="loginEmail" placeholder="seu@email.com" required>
+</div>
+<div class="input-group">
+<label>Senha</label>
+<input type="password" id="loginPassword" placeholder="••••••••" required>
+<span class="toggle-password" onclick="togglePassword('loginPassword')">👁</span>
+</div>
+<button class="btn" type="submit">Entrar</button>
+<div class="extra">
+<a href="#">Esqueceu a senha?</a>
+</div>
+</form>
+</div>
+
+<!-- REGISTER -->
+<div id="register" class="form-section">
+<h2>Criar Conta</h2>
+<form id="registerForm">
+<div class="input-group">
+<label>Nome</label>
+<input type="text" id="regName" placeholder="Seu nome" required>
+</div>
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="regEmail" placeholder="seu@email.com" required>
+</div>
+<div class="input-group">
+<label>Senha</label>
+<input type="password" id="regPassword" placeholder="••••••••" required>
+<span class="toggle-password" onclick="togglePassword('regPassword')">👁</span>
+</div>
+<button class="btn" type="submit">Criar Conta</button>
+<div class="extra">
+<a href="#">Já tem conta? Login</a>
+</div>
+</form>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="form-section">
+<h2>Administração</h2>
+<p>Área restrita para gerenciar leads, serviços e conteúdo do site.</p>
+<button class="btn" onclick="alert(' dashboard.html')">Acessar Painel Admin</button>
+</div>
+
+</div>
+</div>
+
+<script>
+// Alternar abas
+const tabs = document.querySelectorAll('.tab');
+const sections = document.querySelectorAll('.form-section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', ()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.dataset.tab;
+    sections.forEach(sec => sec.id===target?sec.classList.add('active'):sec.classList.remove('active'));
+  });
+});
+
+// Mostrar/ocultar senha
+function togglePassword(id){
+  const input = document.getElementById(id);
+  input.type = input.type==='password'?'text':'password';
+}
+
+// Login
+document.getElementById("loginForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const email=document.getElementById("loginEmail").value;
+  const password=document.getElementById("loginPassword").value;
+  alert(`Login enviado! Email: ${email}`);
+});
+
+// Register
+document.getElementById("registerForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const name=document.getElementById("regName").value;
+  const email=document.getElementById("regEmail").value;
+  const password=document.getElementById("regPassword").value;
+  alert(`Conta criada! Nome: ${name} | Email: ${email}`);
+});
+</script>
+
+</body>
+</html>
